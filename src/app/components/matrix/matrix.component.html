@@ -1,0 +1,19 @@
+<div class="howIs">Ходит {{turn}}</div>
+<div class="poligin" *ngFor="let poligon of pologons">
+    <div class="pol" *ngFor="let info of poligon" >
+        <div *ngIf="info.texture==='grass'" class="grass">
+            <div *ngIf="info.hero===hero1" class="hero1" #heroId1> </div>
+            <div *ngIf="info.hero===hero2" class="hero2" #heroId2></div>
+        </div>
+        <div *ngIf="info.texture==='water'" class="water"></div>
+
+    </div>
+</div>
+<button (click)="checker()">сменить игрока</button>
+<button (click)="isGameOver1()">победить</button>
+<b>Осталось ходов </b> <b>{{steps}}</b>
+<div class="absalut" [ngStyle]="{'top.px': 50,'left.px': 50}"></div>
+<div class="win" *ngIf="gameover">
+    <div class="text">WIN {{turn}} !!!</div>
+    <div class="button" (click)="isGameOver()">Новая игра</div>
+</div>
