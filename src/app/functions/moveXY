@@ -1,0 +1,3 @@
+  
+  export const moveTupX=(x:number): number=> x*102
+  export const moveTupY=(y:number): number=> y*102

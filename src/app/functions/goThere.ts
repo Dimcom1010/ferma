@@ -1,5 +1,6 @@
 import {ban} from './ban'
 import {whereIsTheHero} from './whereIsTheHero'
+
 export const goThere = (key: string,pologons:any,impassable:any,turn:string):number[]|null => {
     let coordinatsHero=whereIsTheHero(pologons,turn)
     let x = coordinatsHero[0]

@@ -1,4 +1,6 @@
-export const whereIsTheHero=(pologons:any,turn:string, delHero:boolean=false,xNew:number=-1,yNew:number=-1):number[]=> {
+import { MatrixComponent } from '../components/matrix/matrix.component'
+
+export const  whereIsTheHero=(pologons:any,turn:string, delHero:boolean=false,xNew:number=-1,yNew:number=-1):number[]=> {
     let xHero:number=0
     let yHero:number=0
 
@@ -16,7 +18,19 @@ export const whereIsTheHero=(pologons:any,turn:string, delHero:boolean=false,xNe
           delHero?x.hero='':turn
         }
         if (searchPositionX === xNew && searchPositionY === yNew) {
-          x.hero = turn
+          if(x.hero==''){
+            x.hero = turn
+            console.log('ход')
+            console.log(searchPositionX,searchPositionY)
+            MatrixComponent.prototype.moveXY(searchPositionX,searchPositionY,turn)
+
+          }else{
+            console.log('выиграл '+ turn)
+            x.hero = turn;
+            
+
+          }
+         
         }
       });
     });

@@ -10,10 +10,11 @@
     </div>
 </div>
 <button (click)="checker()">сменить игрока</button>
-<button (click)="isGameOver1()">победить</button>
+<button (click)="isgameOver()">победить</button>
 <b>Осталось ходов </b> <b>{{steps}}</b>
-<div class="absalut" [ngStyle]="{'top.px': 50,'left.px': 50}"></div>
+<div class="absalut" [ngStyle]="{'top.px': hero1Y,'left.px': hero1X}"></div>
+<div class="absalut" [ngStyle]="{'top.px': hero2Y,'left.px': hero2X}"></div>
 <div class="win" *ngIf="gameover">
     <div class="text">WIN {{turn}} !!!</div>
-    <div class="button" (click)="isGameOver()">Новая игра</div>
+    <div class="button" (click)="newGame()">Новая игра</div>
 </div>
