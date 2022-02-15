@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { searchImpassable } from '../../functions/searchImpassable'
 import { goThere } from '../../functions/goThere'
 import { whereIsTheHero } from '../../functions/whereIsTheHero'
+import {User} from '../../class/user'
 
 @Component({
   selector: 'app-matrix',
@@ -18,30 +19,31 @@ export class MatrixComponent implements OnInit {
       this.steps = this.steps - 1
       whereIsTheHero(this.pologons, this.turn, true)
       whereIsTheHero(this.pologons, this.turn, false, xy[0], xy[1])
+
     }
   }
 
   @ViewChild('heroId1') public heroId1: ElementRef | undefined
   @ViewChild('heroId2') public heroId2: ElementRef | undefined
 
-  public hero1: string = 'MEO';    // Имя I игрока
-  public hero2: string = 'NEO'      // Имя II игрока
-  public hero1X: number = 0;
-  public hero1Y: number = 0;
-  public hero2X: number = 400;
-  public hero2Y: number = 500;
+  public superHero1:User
+  public superHero2:User
 
+  public hero1: string    // Имя I игрока
+  public hero2: string      // Имя II игрока
+
+  public hero1X: number
+  public hero1Y: number
+  public hero2X: number
+  public hero2Y: number
 
   public steps: number = 6
-
-  public turn: string = this.hero1 // чья очередь
+  public turn: string // чья очередь
   public gameover: boolean = false
-
-
 
   public pologons = [
     [
-      { texture: 'grass', thing: '', hero: this.hero1 },
+      { texture: 'grass', thing: '', hero: 'FIRST'},
       { texture: 'grass', thing: '', hero: '' },
       { texture: 'grass', thing: '', hero: '' },
       { texture: 'grass', thing: '', hero: '' },
@@ -68,14 +70,24 @@ export class MatrixComponent implements OnInit {
       { texture: 'grass', thing: 'dreams', hero: '' },
       { texture: 'grass', thing: '', hero: '' },
       { texture: 'grass', thing: '', hero: '' },
-      { texture: 'grass', thing: '', hero: this.hero2 },
+      { texture: 'grass', thing: '', hero: 'SEKOND'},
     ],
 
   ];
 
   impassable: [number[]] | [] = []; // карты препядствий
 
-  constructor() { }
+  constructor() {
+    this.superHero1 = new User (0,0,'FIRST')
+    this.superHero2 = new User (400,500,'SEKOND')
+    this.hero1 =  this.superHero1.heroName
+    this.hero2 = this.superHero2.heroName
+    this.hero1X = this.superHero1.hero1X
+    this.hero1Y = this.superHero1.hero1Y
+    this.hero2X = this.superHero2.hero1X
+    this.hero2Y = this.superHero2.hero1Y
+    this.turn = this.hero1
+   }
 
   ngOnInit(): void {
     this.impassable = searchImpassable('water', this.pologons); //постройка карты препядствий
@@ -87,6 +99,7 @@ export class MatrixComponent implements OnInit {
     console.log(this)
     this.steps = 6
   }
+
   newGame() {
     this.gameover = false
     this.steps = 6
@@ -99,6 +112,7 @@ export class MatrixComponent implements OnInit {
     let hero = heroId?.nativeElement.getBoundingClientRect()
     return [hero.x, hero.y]
   }
+
   moveXY(x: number, y: number, turn: string): void {
     console.log('this ')
     console.log(this)
