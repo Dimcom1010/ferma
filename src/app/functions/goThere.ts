@@ -1,14 +1,20 @@
+import { User } from '../class/user'
 import {ban} from './ban'
 import {whereIsTheHero} from './whereIsTheHero'
 
-export const goThere = (key: string,pologons:any,impassable:any,turn:string):number[]|null => {
-    let coordinatsHero=whereIsTheHero(pologons,turn)
+
+export const goThere = (key: string,pologons:any,impassable:any,turn:User):number[]|null => {
+    let coordinatsHero=whereIsTheHero(pologons,turn.heroName)
     let x = coordinatsHero[0]
     let y = coordinatsHero[1]
     4
     if (key == '2') {
       console.log('go down');
-      return ban(x,y+1,impassable)?[x,y+1]:null
+      if(ban(x,y+1,impassable)){
+        turn.moveDown()
+        return null
+      }
+      return null
     }
 
     if (key == '4') {

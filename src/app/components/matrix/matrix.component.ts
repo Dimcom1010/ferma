@@ -17,8 +17,8 @@ export class MatrixComponent implements OnInit {
     let xy = goThere(event.key, this.pologons, this.impassable, this.turn)
     if (xy && this.steps > 0) {
       this.steps = this.steps - 1
-      whereIsTheHero(this.pologons, this.turn, true)
-      whereIsTheHero(this.pologons, this.turn, false, xy[0], xy[1])
+      whereIsTheHero(this.pologons, this.turn.heroName, true)
+      whereIsTheHero(this.pologons, this.turn.heroName, false, xy[0], xy[1])
 
     }
   }
@@ -38,7 +38,7 @@ export class MatrixComponent implements OnInit {
   public hero2Y: number
 
   public steps: number = 6
-  public turn: string // чья очередь
+  public turn: User // чья очередь
   public gameover: boolean = false
 
   public pologons = [
@@ -86,7 +86,7 @@ export class MatrixComponent implements OnInit {
     this.hero1Y = this.superHero1.hero1Y
     this.hero2X = this.superHero2.hero1X
     this.hero2Y = this.superHero2.hero1Y
-    this.turn = this.hero1
+    this.turn = this.superHero1
    }
 
   ngOnInit(): void {
@@ -94,7 +94,7 @@ export class MatrixComponent implements OnInit {
   }
   checker() {
     
-    (this.turn === this.hero1) ? this.turn = this.hero2 : this.turn = this.hero1
+    (this.turn === this.superHero1) ? this.turn = this.superHero2 : this.turn = this.superHero1
     console.log('this checker')
     console.log(this)
     this.steps = 6
@@ -116,14 +116,14 @@ export class MatrixComponent implements OnInit {
   moveXY(x: number, y: number, turn: string): void {
     console.log('this ')
     console.log(this)
-    if (turn === this.turn) {
+    if (turn === this.turn.heroName) {
       this.hero1X = x * 102;
       this.hero1Y = y * 102;
       console.log('перемещаю 1')
       console.log(this.hero1X,this.hero1Y)
     }
     
-    if (turn === this.turn) {
+    if (turn === this.turn.heroName) {
       console.log(this.hero2X,this.hero2Y)
       this.hero2X = x * 102;
       this.hero2Y = y * 102;

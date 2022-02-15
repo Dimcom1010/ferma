@@ -1,4 +1,4 @@
-<div class="howIs">Ходит {{turn}}</div>
+<div class="howIs">Ходит {{turn.heroName}}</div>
 <div class="poligin" *ngFor="let poligon of pologons">
     <div class="pol" *ngFor="let info of poligon" >
         <div *ngIf="info.texture==='grass'" class="grass">
@@ -15,6 +15,6 @@
 <div class="absalut" [ngStyle]="{'top.px': hero1Y,'left.px': hero1X}"></div>
 <div class="absalut" [ngStyle]="{'top.px': hero2Y,'left.px': hero2X}"></div>
 <div class="win" *ngIf="gameover">
-    <div class="text">WIN {{turn}} !!!</div>
+    <div class="text">WIN {{turn.heroName}} !!!</div>
     <div class="button" (click)="newGame()">Новая игра</div>
 </div>
