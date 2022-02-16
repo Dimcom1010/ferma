@@ -1,11 +1,14 @@
-import { MatrixComponent } from '../components/matrix/matrix.component';
+import { MatrixComponent } from "../components/matrix/matrix.component";
+
 
 export const whereIsTheHero = (
   pologons: any,
-  turn: string,
+  turn: string, 
+  matrixComponent : MatrixComponent| null,
   delHero: boolean = false,
   xNew: number = -1,
   yNew: number = -1
+
 ): number[] => {
   let xHero: number = 0;
   let yHero: number = 0;
@@ -26,10 +29,12 @@ export const whereIsTheHero = (
       if (searchPositionX === xNew && searchPositionY === yNew) {
         if (x.hero == '') {
           x.hero = turn;
+
           // MatrixComponent.prototype.moveXY(searchPositionX,searchPositionY,turn)
         } else {
           console.log('выиграл ' + turn);
           x.hero = turn;
+          matrixComponent?.isgameOver()
         }
       }
     });

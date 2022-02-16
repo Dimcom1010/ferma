@@ -1,6 +1,9 @@
 .howIs{
 
 }
+.container{
+    position: relative;
+}
 .poligin{
     display: flex;
 }
@@ -26,29 +29,24 @@
     background-image: url(../../../assets/img/water.png);
 
 }
-.hero1{
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-size: cover;
-    background-image: url(https://c0.klipartz.com/pngpicture/351/883/gratis-png-vaca.png);
-}
-.hero2{
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-size: cover;
-    background-image: url(../../../assets/img/ship.png);
-}
 .absalut{
-    display: block;
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    background-color: aquamarine;
     position: absolute;
 
 }
+.hero {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    transition: 0.3s ease-in-out;
+}
+.first{
+    background-image: url(https://c0.klipartz.com/pngpicture/351/883/gratis-png-vaca.png);
+}
+.second{
+    background-image: url(../../../assets/img/ship.png);
+}
+
 .win{
     display: block;
     position: absolute;

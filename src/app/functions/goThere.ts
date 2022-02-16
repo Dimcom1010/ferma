@@ -1,6 +1,9 @@
 import { User } from '../class/user';
+import { MatrixComponent } from '../components/matrix/matrix.component';
 import { ban } from './ban';
 import { whereIsTheHero } from './whereIsTheHero';
+
+const a:null=null
 
 export const goThere = (
   key: string,
@@ -9,7 +12,7 @@ export const goThere = (
   turn: User,
   steps: number
 ): number[] | null => {
-  let coordinatsHero = whereIsTheHero(pologons, turn.heroName);
+  let coordinatsHero = whereIsTheHero(pologons, turn.heroName, a);
   let x = coordinatsHero[0];
   let y = coordinatsHero[1];
   4;
