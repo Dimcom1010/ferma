@@ -9,6 +9,7 @@ import { searchImpassable } from '../../functions/searchImpassable';
 import { goThere } from '../../functions/goThere';
 import { whereIsTheHero } from '../../functions/whereIsTheHero';
 import { User } from '../../class/user';
+import { max } from 'rxjs';
 
 @Component({
   selector: 'app-matrix',
@@ -111,14 +112,17 @@ export class MatrixComponent implements OnInit {
   ngOnInit(): void {
     this.impassable = searchImpassable('water', this.pologons); //постройка карты препядствий
     // this.mapgen();
-    this.saper([
-      [1, 1, 1, 1, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 0, 0, 1],
-      [1, 1, 1, 1, 1],
-    ]);
-    // this.mapgen(this.mapGen(10, 10));
+    // this.saper([
+    //   [1, 1, 1, 1, 1],
+    //   [1, 0, 0, 0, 1],
+    //   [1, 0, 0, 0, 1],
+    //   [1, 0, 0, 0, 1],
+    //   [1, 1, 1, 1, 1],
+    // ]);
+    // this.saper(this.mapgen(this.mapGen(10, 10)));
+    const mapDemoData: number[][] = this.mapGen(10, 10)
+    const saperData: number[][] = this.saper(this.mapgen(this.mapGen(10, 10)))
+    this.kirka(mapDemoData, saperData);
     // this.makeWay(this.mapGen());
   }
   checker(): void {
@@ -158,14 +162,11 @@ export class MatrixComponent implements OnInit {
           newMap[y][x] = 9;
         } else if (x == 1 && y == 1) {
           newMap[y][x] = 1;
-          console.log('x,y');
-          console.log(x, y);
         } else if (y == w - 2 && x == h - 2) {
           newMap[y][x] = 1;
-          console.log('x,y');
-          console.log(x, y);
         } else {
-          newMap[y][x] = Math.round(Math.random());
+          // newMap[y][x] = Math.round(Math.random());
+          newMap[y][x] = 0;
         }
       }
     }
@@ -209,41 +210,90 @@ export class MatrixComponent implements OnInit {
   }
 
   saper(arr: number[][]): number[][] {
-    const arrW: number[][] = [];
-    arrW.forEach((e, indexY) =>
-      arrW.push(e.map((num, indexX) => this.raner(indexX, indexY, arr)))
-    );
-    console.log('arrSaper saper');
-    console.log(arrW);
-    return arrW;
+    const arrS: number[][] = [];
+    arr.forEach(((e, indexY) => arrS.push(e.map((m, indexX) => m = this.raner(indexX, indexY, arr)))))
+
+    console.log("arrS")
+    console.log(arrS)
+    return arrS;
   }
   raner(x: number, y: number, arr: number[][]): number {
     let summ: number = 0;
 
-    if (arr[y - 1][x - 1] === 1) {
-      summ += 1;
+    if (y > 0 && x > 0 && y < arr.length - 1 && x < arr[0].length - 1) {
+      {
+        if (arr[y - 1][x - 1] === 1) {
+          summ += 1;
+        }
+      }
+      if (arr[y - 1][x] === 1) {
+        summ += 1;
+      }
+      if (arr[y - 1][x + 1] === 1) {
+        summ += 1;
+      }
+      if (arr[y][x - 1] === 1) {
+        summ += 1;
+      }
+      if (arr[y][x + 1] === 1) {
+        summ += 1;
+      }
+      if (arr[y + 1][x - 1] === 1) {
+        summ += 1;
+      }
+      if (arr[y + 1][x] === 1) {
+        summ += 1;
+      }
+      if (arr[y + 1][x + 1] === 1) {
+        summ += 1;
+      }
+      return summ;
+
+    } else {
+      return 9
     }
-    if (arr[y - 1][x] === 1) {
-      summ += 1;
+  }
+  kirka(arrMap: number[][], arrSaper: number[][]): number[][] {
+    const arrKirka: number[][] = [];
+
+    const y: number = 1
+    const x: number = 1
+    // arrMap.forEach((e, indexY) => arrKirka.push(e.map((k, indexX) => this.analise(indexY, indexX, arrMap, arrSaper))))
+    while (x < arrMap[0].length - 1) {
+      let up: number = arrSaper[x][y - 1]
+      let right: number = arrSaper[x + 1][y]
+      let down: number = arrSaper[x][y + 1]
+      let Left: number = arrSaper[x - 1][y]
+
+      this.minData(up, right, down, Left)
+
+
+      break
+
     }
-    if (arr[y - 1][x + 1] === 1) {
-      summ += 1;
-    }
-    if (arr[y][x - 1] === 1) {
-      summ += 1;
-    }
-    if (arr[y][x + 1] === 1) {
-      summ += 1;
-    }
-    if (arr[y + 1][x - 1] === 1) {
-      summ += 1;
-    }
-    if (arr[y + 1][x] === 1) {
-      summ += 1;
-    }
-    if (arr[y + 1][x + 1] === 1) {
-      summ += 1;
-    }
-    return summ;
+    console.log('kirka');
+    console.log(arrKirka);
+    return arrKirka;
+  }
+  minData(up: number, right: number, down: number, Left: number): string {
+    const resault: string[] = []
+    const dataStreet: any = [
+      ["up", up],
+      ["right", right],
+      ["down", down],
+      ["Left", Left],
+    ]
+    let min = Math.min(up, right, down, Left)
+    dataStreet.forEach((e: any) => e[1] == min ? resault.push(e[0]) : resault.push())
+    if (resault.length > 1)  {return resault[Math.floor(Math.random() * resault.length) + 1]}else {return resault[0]}
+  }
+  random(str:string[]): string {
+
+
+    return "resault"
   }
 }
+function getRandomInt(length: number) {
+  throw new Error('Function not implemented.');
+}
+
