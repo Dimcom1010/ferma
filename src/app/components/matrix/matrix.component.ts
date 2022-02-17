@@ -115,6 +115,7 @@ export class MatrixComponent implements OnInit {
       [1, 1, 1, 1, 1],
       [1, 0, 0, 0, 1],
       [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
       [1, 1, 1, 1, 1],
     ]);
     // this.mapgen(this.mapGen(10, 10));
@@ -144,17 +145,17 @@ export class MatrixComponent implements OnInit {
     for (let y = 0; y < w; y++) {
       for (let x = 0; x < h; x++) {
         if (x === 0 && y === 0) {
-          newMap[y][x] = 2;
+          newMap[y][x] = 9;
         } else if (x == 0 && y !== 0) {
-          newMap[y][x] = 2;
+          newMap[y][x] = 9;
         } else if (x !== 0 && y == 0) {
-          newMap[y][x] = 2;
+          newMap[y][x] = 9;
         } else if (x == w - 1 && y == h - 1) {
-          newMap[y][x] = 2;
+          newMap[y][x] = 9;
         } else if (x == w - 1 && y !== h - 1) {
-          newMap[y][x] = 2;
+          newMap[y][x] = 9;
         } else if (x !== w - 1 && y == h - 1) {
-          newMap[y][x] = 2;
+          newMap[y][x] = 9;
         } else if (x == 1 && y == 1) {
           newMap[y][x] = 1;
           console.log('x,y');
@@ -208,62 +209,41 @@ export class MatrixComponent implements OnInit {
   }
 
   saper(arr: number[][]): number[][] {
-    // const arrSaper: number[][] = [];
-    // const arrMin: number[] = [];
-    // for (let m = 0; m < arr[0].length; m++) {
-    //   arrMin.push(1);
-    // }
-    // for (let e = 0; e < arr.length; e++) {
-    //   arrSaper.push(arrMin);
-    // }
+    const arrW: number[][] = [];
+    arrW.forEach((e, indexY) =>
+      arrW.push(e.map((num, indexX) => this.raner(indexX, indexY, arr)))
+    );
     console.log('arrSaper saper');
-    console.log(arr);
-    debugger;
-    for (let y = 1; y < arr.length - 1; y++) {
-      for (let x = 1; x < arr[0].length - 1; x++) {
-        let d = this.raner(x, y, arr);
-        arr[y][x] = d;
-        console.log('this.raner', x, y);
-        console.log(d);
-        console.log(arr);
-      }
-    }
-    console.log('arrSaper saper');
-    console.log(arr);
-    return arr;
+    console.log(arrW);
+    return arrW;
   }
   raner(x: number, y: number, arr: number[][]): number {
-    let summ: number = 4;
+    let summ: number = 0;
 
-    // if (x - 1 >= 0 && y - 1 >= 0) {
-    //   arr[y - 1][x - 1] == 1 ? summ++ : summ;
-    // } if (y - 1 >= 0){
-    //   arr[y - 1][x] == 1 ? summ++ : summ;
-    // }
-    // if (y - 1 >= 0 && y - 1 >= 0 && arr[y - 1][x - 1] === 1) {
-    //   summ += 1;
-    // }
-    // if (y - 1 >= 0 && arr[y - 1][x] === 1) {
-    //   summ += 1;
-    // }
-    // if (y - 1 >= 0 && x + 1 < 3 && arr[y - 1][x + 1] === 1) {
-    //   summ += 1;
-    // }
-    // if (y - 1 >= 0 && arr[y][x - 1] === 1) {
-    //   summ += 1;
-    // }
-    // if (x + 1 < 3 && arr[y][x + 1] === 1) {
-    //   summ += 1;
-    // }
-    // if (x - 1 >= 0 && arr[y + 1][x - 1] === 1) {
-    //   summ += 1;
-    // }
-    // if (arr[y + 1][x] === 1) {
-    //   summ += 1;
-    // }
-    // if (x + 1 < 3 && arr[y + 1][x + 1] === 1) {
-    //   summ += 1;
-    // }
+    if (arr[y - 1][x - 1] === 1) {
+      summ += 1;
+    }
+    if (arr[y - 1][x] === 1) {
+      summ += 1;
+    }
+    if (arr[y - 1][x + 1] === 1) {
+      summ += 1;
+    }
+    if (arr[y][x - 1] === 1) {
+      summ += 1;
+    }
+    if (arr[y][x + 1] === 1) {
+      summ += 1;
+    }
+    if (arr[y + 1][x - 1] === 1) {
+      summ += 1;
+    }
+    if (arr[y + 1][x] === 1) {
+      summ += 1;
+    }
+    if (arr[y + 1][x + 1] === 1) {
+      summ += 1;
+    }
     return summ;
   }
 }
