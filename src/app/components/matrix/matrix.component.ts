@@ -120,8 +120,9 @@ export class MatrixComponent implements OnInit {
     //   [1, 1, 1, 1, 1],
     // ]);
     // this.saper(this.mapgen(this.mapGen(10, 10)));
-    const mapDemoData: number[][] = this.mapGen(10, 10)
-    const saperData: number[][] = this.saper(this.mapgen(this.mapGen(10, 10)))
+    const mapDemoData: number[][] = this.mapGen(10, 10);
+    const saperData: number[][] = this.saper(this.mapgen(this.mapGen(10, 10)));
+
     this.kirka(mapDemoData, saperData);
     // this.makeWay(this.mapGen());
   }
@@ -170,7 +171,7 @@ export class MatrixComponent implements OnInit {
         }
       }
     }
-    console.log('newMap');
+    console.log('mapGen newMap');
     console.log(newMap);
     return newMap;
   }
@@ -197,7 +198,7 @@ export class MatrixComponent implements OnInit {
 
     //   }
     // }
-    console.log('arr');
+    console.log('makeWay arr');
     console.log(arr);
     return arr;
   }
@@ -211,10 +212,12 @@ export class MatrixComponent implements OnInit {
 
   saper(arr: number[][]): number[][] {
     const arrS: number[][] = [];
-    arr.forEach(((e, indexY) => arrS.push(e.map((m, indexX) => m = this.raner(indexX, indexY, arr)))))
+    arr.forEach((e, indexY) =>
+      arrS.push(e.map((m, indexX) => (m = this.raner(indexX, indexY, arr))))
+    );
 
-    console.log("arrS")
-    console.log(arrS)
+    console.log('arrS');
+    console.log(arrS);
     return arrS;
   }
   raner(x: number, y: number, arr: number[][]): number {
@@ -222,78 +225,118 @@ export class MatrixComponent implements OnInit {
 
     if (y > 0 && x > 0 && y < arr.length - 1 && x < arr[0].length - 1) {
       {
-        if (arr[y - 1][x - 1] === 1) {
+        if (arr[y - 1][x - 1] === 1 || arr[y - 1][x - 1] === 9) {
           summ += 1;
         }
       }
-      if (arr[y - 1][x] === 1) {
+      if (arr[y - 1][x] === 1 || arr[y - 1][x] === 1) {
         summ += 1;
       }
-      if (arr[y - 1][x + 1] === 1) {
+      if (arr[y - 1][x + 1] === 1 || arr[y - 1][x + 1] === 1) {
         summ += 1;
       }
-      if (arr[y][x - 1] === 1) {
+      if (arr[y][x - 1] === 1 || arr[y][x - 1] === 1) {
         summ += 1;
       }
-      if (arr[y][x + 1] === 1) {
+      if (arr[y][x + 1] === 1 || arr[y][x + 1] === 1) {
         summ += 1;
       }
-      if (arr[y + 1][x - 1] === 1) {
+      if (arr[y + 1][x - 1] === 1 || arr[y + 1][x - 1] === 1) {
         summ += 1;
       }
-      if (arr[y + 1][x] === 1) {
+      if (arr[y + 1][x] === 1 || arr[y + 1][x] === 1) {
         summ += 1;
       }
-      if (arr[y + 1][x + 1] === 1) {
+      if (arr[y + 1][x + 1] === 1 || arr[y + 1][x + 1] === 1) {
         summ += 1;
       }
       return summ;
-
     } else {
-      return 9
+      return 9;
     }
   }
   kirka(arrMap: number[][], arrSaper: number[][]): number[][] {
-    const arrKirka: number[][] = [];
+    const y: number = 1;
+    const x: number = 1;
+    console.log('raundraundraund');
+    console.log(this.raund(x, y, arrSaper, arrMap));
 
-    const y: number = 1
-    const x: number = 1
-    // arrMap.forEach((e, indexY) => arrKirka.push(e.map((k, indexX) => this.analise(indexY, indexX, arrMap, arrSaper))))
-    while (x < arrMap[0].length - 1) {
-      let up: number = arrSaper[x][y - 1]
-      let right: number = arrSaper[x + 1][y]
-      let down: number = arrSaper[x][y + 1]
-      let Left: number = arrSaper[x - 1][y]
-
-      this.minData(up, right, down, Left)
-
-
-      break
-
-    }
-    console.log('kirka');
-    console.log(arrKirka);
-    return arrKirka;
+    return arrMap;
   }
-  minData(up: number, right: number, down: number, Left: number): string {
-    const resault: string[] = []
+  minData(up: number, right: number, down: number, left: number): string {
+    const resault: string[] = [];
     const dataStreet: any = [
-      ["up", up],
-      ["right", right],
-      ["down", down],
-      ["Left", Left],
-    ]
-    let min = Math.min(up, right, down, Left)
-    dataStreet.forEach((e: any) => e[1] == min ? resault.push(e[0]) : resault.push())
-    if (resault.length > 1)  {return resault[Math.floor(Math.random() * resault.length) + 1]}else {return resault[0]}
+      ['up', up],
+      ['right', right],
+      ['down', down],
+      ['left', left],
+    ];
+    let min = Math.min(up, right, down, left);
+
+    dataStreet.forEach((e: any) => {
+      if (e[1] == min) {
+        resault.push(e[0]);
+      }
+    });
+    if (resault.length > 1) {
+      return resault[Math.floor(Math.random() * resault.length)];
+    } else {
+      return resault[0];
+    }
   }
-  random(str:string[]): string {
+  random(str: string[]): string {
+    return 'resault';
+  }
+  raund(x: number, y: number, arrSaper: number[][], arrMap: number[][]): any {
+    if (x < arrMap[0].length - 1) {
+      debugger;
+      let up: number = arrSaper[y - 1][x];
+      let right: number = arrSaper[y][x + 1];
+      let down: number = arrSaper[y + 1][x];
+      let left: number = arrSaper[y][x - 1];
 
+      if (arrMap[x][y - 1] === 9 || arrMap[x][y - 1] === 1) {
+        up = 9;
+        arrSaper[x][y - 1] = 9;
+      }
+      if (arrMap[x + 1][y] === 9 || arrMap[x + 1][y] === 1) {
+        right = 9;
+        arrSaper[x + 1][y] = 9;
+      }
+      if (arrMap[x][y + 1] === 9 || arrMap[x][y + 1]) {
+        down = 9;
+        arrSaper[x][y + 1] = 9;
+      }
+      if (arrMap[x - 1][y] === 9 || arrMap[x - 1][y] === 1) {
+        left = 9;
+        arrSaper[x - 1][y] = 9;
+      }
+      arrMap[y][x] = 1;
+      let goTo = this.minData(up, right, down, left);
 
-    return "resault"
+      if (goTo === 'up') {
+        y -= 1;
+        arrMap[y][x] = 1;
+        arrSaper = this.saper(arrMap);
+        this.raund(x, y, arrSaper, arrMap);
+      } else if (goTo === 'right') {
+        x += 1;
+        arrMap[y][x] = 1;
+        arrSaper = this.saper(arrMap);
+        this.raund(x, y, arrSaper, arrMap);
+      } else if (goTo === 'down') {
+        y += 1;
+        arrMap[y][x] = 1;
+        arrSaper = this.saper(arrMap);
+        this.raund(x, y, arrSaper, arrMap);
+      } else if (goTo === 'left') {
+        x -= 1;
+        arrMap[y][x] = 1;
+        arrSaper = this.saper(arrMap);
+        this.raund(x, y, arrSaper, arrMap);
+      }
+    } else {
+      return arrMap;
+    }
   }
 }
-function getRandomInt(length: number) {
-  throw new Error('Function not implemented.');
-}
-
